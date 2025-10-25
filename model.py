@@ -4,7 +4,7 @@
 # Description: Enhanced version with class weighting, deeper architecture, LR scheduling, and feature regularization.
 
 import pandas as pd
-import numpy as np
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -12,12 +12,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, roc_auc_score, f1_score
 import matplotlib.pyplot as plt
-from datetime import datetime
+
 
 # --------------------------
 # 1. Load and Explore Dataset
 # --------------------------
-df = pd.read_csv("dataset_med.csv")
+df = pd.read_csv("balanced_dataset.csv")
 
 # Drop unnecessary columns
 if 'id' in df.columns:
@@ -107,6 +107,7 @@ scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=10, gamma=0.9)
 epochs = 100
 
 train_losses, test_losses = [], []
+print(df['survived'].value_counts())
 
 # --------------------------
 # 7. Training Loop

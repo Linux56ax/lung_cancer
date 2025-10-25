@@ -1,2 +1,7 @@
 dataset_med.csv
-lung_cancer_model.pth
+
+balanced_dataset.csv
+lung_cancer_modelv2.pth
+test.py 
+lung_cancer_model_v2.pth
+myenv
