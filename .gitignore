@@ -1,5 +1,5 @@
 dataset_med.csv
-
+model.py
 balanced_dataset.csv
 lung_cancer_modelv2.pth
 test.py 
@@ -10,9 +10,9 @@ final_model.py
 rf_model.py
 final_model_v2.py
 final_model_v3.py
-
 best_model_fold_0.pth
 best_model_fold_1.pth
 best_model_fold_2.pth
 best_model_fold_3.pth
 best_model_fold_4.pth
+lung_cancer_model.pth
