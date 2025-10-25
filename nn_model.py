@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-#  Load and Explore Dataset
+#Load and Explore Dataset
 
 df = pd.read_csv("balanced_dataset.csv")
 
@@ -29,7 +29,7 @@ if 'diagnosis_date' in df.columns and 'end_treatment_date' in df.columns:
     df['diagnosis_month'] = df['diagnosis_date'].dt.month
     df.drop(columns=['diagnosis_date', 'end_treatment_date'], inplace=True)
 
-# Fill missing values with more sophisticated approach
+#Fill missing values with more sophisticated approach
 numerical_cols = df.select_dtypes(include=['float64', 'int64']).columns
 categorical_cols = df.select_dtypes(include=['object']).columns
 
@@ -40,45 +40,45 @@ for col in categorical_cols:
     df[col].fillna(df[col].mode()[0], inplace=True)
 
 
-# Enhanced Feature Engineering
-# Encode categorical variables with memory-efficient categorical dtype
+#Enhanced Feature Engineering
+#Encode categorical variables with memory-efficient categorical dtype
 for col in categorical_cols:
     le = LabelEncoder()
     df[col] = le.fit_transform(df[col])
 
-# Create interaction features
+#Create interaction features
 if "bmi" in df.columns and "age" in df.columns:
     df["bmi_age_ratio"] = df["bmi"] / df["age"]
 
 if "cancer_stage" in df.columns:
     df["stage_treatment_interaction"] = df["cancer_stage"] * df["treatment_type"]
 
-# Create risk score based on medical conditions
+#Create risk score based on medical conditions
 medical_conditions = ['hypertension', 'asthma', 'cirrhosis', 'other_cancer']
 if all(col in df.columns for col in medical_conditions):
     df['risk_score'] = df[medical_conditions].sum(axis=1)
 
 
-#  Feature Selection
+#Feature Selection
 
 X = df.drop('survived', axis=1)
 y = df['survived']
 
-# Calculate feature importance using mutual information
+#Calculate feature importance using mutual information
 mi_scores = mutual_info_classif(X, y)
 feature_importance = pd.DataFrame({'feature': X.columns, 'importance': mi_scores})
 feature_importance = feature_importance.sort_values('importance', ascending=False)
 
-# Select top features
+#Select top features
 top_features = feature_importance['feature'].head(12).tolist()
 X = X[top_features]
 
-# Normalize features
+#Normalize features
 scaler = StandardScaler()
 X = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
 
 
-#  Enhanced Neural Network
+#Enhanced Neural Network
 class EnhancedLungCancerPredictor(nn.Module):
     def __init__(self, input_dim):
         super().__init__()
@@ -115,7 +115,7 @@ class EnhancedLungCancerPredictor(nn.Module):
         return self.output(x)
 
 
-#  Training with Cross-validation
+#Training with Cross-validation
 def train_model(X, y, fold_num):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
@@ -179,7 +179,7 @@ def train_model(X, y, fold_num):
             if (epoch + 1) % 10 == 0:
                 print(f"Epoch [{epoch+1}/{epochs}] - Loss: {total_loss/len(X_train_tensor):.4f}, Val AUC: {val_auc:.4f}, Val Acc: {val_acc:.4f}")
         
-        # Load best model and evaluate
+        #Load best model and evaluate
         model.load_state_dict(torch.load(f'best_model_fold_{fold}.pth'))
         model.eval()
         with torch.no_grad():
@@ -206,7 +206,7 @@ def train_model(X, y, fold_num):
             
     return model, fold_results
 
-# Train the model with cross-validation
+#Train the model with cross-validation
 for fold in range(5):
     print(f"\nTraining Fold {fold}")
     model, results = train_model(X, y, fold)
