@@ -40,7 +40,7 @@ for col in categorical_cols:
     df[col].fillna(df[col].mode()[0], inplace=True)
 
 
-# 2. Enhanced Feature Engineering
+# Enhanced Feature Engineering
 # Encode categorical variables with memory-efficient categorical dtype
 for col in categorical_cols:
     le = LabelEncoder()
@@ -59,7 +59,7 @@ if all(col in df.columns for col in medical_conditions):
     df['risk_score'] = df[medical_conditions].sum(axis=1)
 
 
-# 3. Feature Selection
+#  Feature Selection
 
 X = df.drop('survived', axis=1)
 y = df['survived']
@@ -78,7 +78,7 @@ scaler = StandardScaler()
 X = pd.DataFrame(scaler.fit_transform(X), columns=X.columns)
 
 
-# 4. Enhanced Neural Network
+#  Enhanced Neural Network
 class EnhancedLungCancerPredictor(nn.Module):
     def __init__(self, input_dim):
         super().__init__()
@@ -115,7 +115,7 @@ class EnhancedLungCancerPredictor(nn.Module):
         return self.output(x)
 
 
-# 5. Training with Cross-validation
+#  Training with Cross-validation
 def train_model(X, y, fold_num):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     kfold = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
