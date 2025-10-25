@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# 1. Load and Explore Dataset
+#  Load and Explore Dataset
 
 df = pd.read_csv("balanced_dataset.csv")
 
