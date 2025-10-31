@@ -16,3 +16,5 @@ best_model_fold_2.pth
 best_model_fold_3.pth
 best_model_fold_4.pth
 lung_cancer_model.pth
+test.py
+.venv
